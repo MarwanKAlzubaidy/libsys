@@ -1,4 +1,4 @@
-package edu.kfupm.libsys.entities;
+package edu.kfupm.libsys.entities.user;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,8 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
  @Setter
  @Getter
-@MappedSuperclass
-public class User {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)

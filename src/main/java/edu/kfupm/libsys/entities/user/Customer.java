@@ -1,5 +1,7 @@
-package edu.kfupm.libsys.entities;
+package edu.kfupm.libsys.entities.user;
 
+import edu.kfupm.libsys.entities.BorrowRecord;
+import edu.kfupm.libsys.entities.Fine;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +12,16 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-public class Customer extends User{
+public class Customer extends User {
 
     private String fname;
     private String lname;
 
     @OneToMany(mappedBy = "customer")
     private Set<BorrowRecord> records;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Fine> fines;
 
 
 

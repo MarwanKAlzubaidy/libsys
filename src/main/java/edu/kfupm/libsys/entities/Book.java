@@ -1,6 +1,7 @@
 package edu.kfupm.libsys.entities;
 
 
+import edu.kfupm.libsys.entities.copy.Copy;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,7 +41,7 @@ public class Book {
 
     @ManyToMany
     @JoinTable(
-            name="write",
+            name="authors_write_books",
             joinColumns = @JoinColumn(name="book_id"),
             inverseJoinColumns = @JoinColumn(name="author_id"))
     private Set<Author> authors;

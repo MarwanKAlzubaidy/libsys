@@ -1,5 +1,7 @@
 package edu.kfupm.libsys.entities;
 
+import edu.kfupm.libsys.entities.copy.Copy;
+import edu.kfupm.libsys.entities.user.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +23,11 @@ public class BorrowRecord {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer   customer;
+    private Customer customer;
 
 
-
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "copy_id", nullable = false)
+    private Copy copy;
 
 }
