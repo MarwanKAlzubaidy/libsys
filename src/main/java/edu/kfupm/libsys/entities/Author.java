@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -25,6 +27,8 @@ public class Author {
     private String firstName;
     private String LastName;
 
+    @Past(message = "past date only")
+    @NotNull(message = "please add date")
     @Column(nullable = false)
     private LocalDate b_date;
 
@@ -36,5 +40,10 @@ public class Author {
         this.LastName = lname;
         this.b_date = b_date;
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return firstName+" "+LastName;
     }
 }

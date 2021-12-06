@@ -29,5 +29,10 @@ public class Publisher {
     @OneToMany(mappedBy = "publisher")
     private Set<Book> books;
 
+    @Override
+    public String toString() {
+        return
+                name;
 
+    }
 }

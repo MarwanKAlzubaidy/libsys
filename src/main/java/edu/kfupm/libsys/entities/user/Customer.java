@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,20 +15,20 @@ import java.util.Set;
 @Getter
 public class Customer extends User {
 
-    private String fname;
-    private String lname;
+    private String firstName;
+    private String lastName;
 
     @OneToMany(mappedBy = "customer")
-    private Set<BorrowRecord> records;
+    private Set<BorrowRecord> records=new HashSet<>();
 
     @OneToMany(mappedBy = "customer")
-    private Set<Fine> fines;
+    private Set<Fine> fines=new HashSet<>();
 
 
 
-    public Customer(String fname, String lname) {
-        this.fname = fname;
-        this.lname = lname;
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         setRole("ROLE_USER");
     }
 

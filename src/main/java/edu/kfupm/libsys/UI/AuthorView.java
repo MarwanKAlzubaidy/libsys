@@ -17,14 +17,12 @@ import edu.kfupm.libsys.entities.services.AuthorService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import java.lang.reflect.Array;
+
 import java.util.Arrays;
 
 //@RolesAllowed("ROLE_ADMIN") //only admin can enter
 @AnonymousAllowed
-@Route(value = "Author")
+@Route(value = "Author",layout=MainLayout.class)
 @PageTitle("Authors")
 public class AuthorView extends VerticalLayout {
     Grid<Author> grid = new Grid<>(Author.class);
@@ -40,6 +38,7 @@ public class AuthorView extends VerticalLayout {
         configureGrid();
         configureForm();
         Notification notification = Notification.show(username());
+
         add(getToolbar(), getContnet());
        updateList();
     }
@@ -90,7 +89,7 @@ public class AuthorView extends VerticalLayout {
         authorForm.addListener(AuthorForm.SaveEvent.class,this::saveAuthor);
         authorForm.addListener(AuthorForm.CloseEvent.class,closeEvent -> editAuthor(null));
         authorForm.addListener(AuthorForm.DeleteEvent.class,this::deleteAuthor);
-
+        authorForm.setVisible(false);
 
     }
     private void saveAuthor(AuthorForm.SaveEvent event){
@@ -99,6 +98,7 @@ public class AuthorView extends VerticalLayout {
     }
     private void deleteAuthor(AuthorForm.DeleteEvent event){
         service.deleteAuthor(event.getAuthor());
+        updateList();
     }
 
     private HorizontalLayout getToolbar() {
