@@ -1,7 +1,7 @@
 package ics324.project.libsys.entities.copy;
 
 import ics324.project.libsys.entities.Library;
-import ics324.project.libsys.entities.Return_status;
+import ics324.project.libsys.enums.Return_status;
 import lombok.Getter;
 import lombok.Setter;
 

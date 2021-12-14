@@ -28,6 +28,9 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public List<Customer> CustomersAvalibleForBorrow() {
+        return customerRepository.availableForBorrow();
+    }
     //public Customer findByuserName(String value) {
     //  }
 }

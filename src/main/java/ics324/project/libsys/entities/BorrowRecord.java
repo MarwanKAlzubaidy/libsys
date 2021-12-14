@@ -2,11 +2,15 @@ package ics324.project.libsys.entities;
 
 import ics324.project.libsys.entities.copy.Copy;
 import ics324.project.libsys.entities.user.Customer;
+import ics324.project.libsys.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -16,8 +20,14 @@ public class BorrowRecord {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-    private Date   check_out_date;
-    private Date   return_date;
+
+
+    @Column(nullable = false)
+    private LocalDate check_out_date;
+    @Future
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate   return_date;
     private Status status;
 
 
@@ -29,5 +39,6 @@ public class BorrowRecord {
     @ManyToOne(optional = false)
     @JoinColumn(name = "copy_id", nullable = false)
     private Copy copy;
+
 
 }

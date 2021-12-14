@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Setter
- @Getter
+@Getter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
@@ -30,10 +30,19 @@ public abstract class User {
     @NotNull
     @Email(message = "Email not valid")
     @Column(nullable = false, unique = true)
-    private  String email;
+    private String email;
     @Column(nullable = false)
     private String role;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id != null ? id.equals(user.id) : user.id == null;
+    }
 
 
 }

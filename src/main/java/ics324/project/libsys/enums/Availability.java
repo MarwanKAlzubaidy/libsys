@@ -1,4 +1,4 @@
-package ics324.project.libsys;
+package ics324.project.libsys.enums;
 
 import lombok.Getter;
 

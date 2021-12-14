@@ -10,7 +10,7 @@ import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.copy.OwnedCopy;
 import ics324.project.libsys.entities.services.BookService;
 import ics324.project.libsys.entities.services.CopyService;
-import ics324.project.libsys.Availability;
+import ics324.project.libsys.enums.Availability;
 
 import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;

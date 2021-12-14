@@ -2,7 +2,7 @@ package ics324.project.libsys.entities.copy;
 
 import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.BorrowRecord;
-import ics324.project.libsys.Availability;
+import ics324.project.libsys.enums.Availability;
 import lombok.Getter;
 import lombok.Setter;
 

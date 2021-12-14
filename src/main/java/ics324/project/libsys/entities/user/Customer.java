@@ -24,13 +24,20 @@ public class Customer extends User {
     @OneToMany(mappedBy = "customer")
     private Set<Fine> fines=new HashSet<>();
 
+    public String getFullName(){
 
+        return firstName+" "+lastName;
+    }
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         setRole("ROLE_USER");
     }
+
+
+
+
 
     public Customer() {
         setRole("ROLE_USER");

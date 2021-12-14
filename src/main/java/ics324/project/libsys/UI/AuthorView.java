@@ -39,7 +39,7 @@ public class AuthorView extends VerticalLayout {
         configureForm();
         Notification notification = Notification.show(username());
 
-        add(getToolbar(), getContnet());
+        add(getToolbar(), getContent());
        updateList();
     }
 
@@ -47,7 +47,7 @@ public class AuthorView extends VerticalLayout {
         grid.setItems(service.findAllAuthor());
     }
 
-    private Component getContnet() {
+    private Component getContent() {
 
 
         HorizontalLayout horizontalLayout = new HorizontalLayout(grid, authorForm);
