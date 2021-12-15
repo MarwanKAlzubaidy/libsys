@@ -6,5 +6,7 @@ import lombok.Getter;
 public enum Status {
     RETURNED,
     OVERDUE,
-    NOT_DUE
+    NOT_DUE;
+
+
 }

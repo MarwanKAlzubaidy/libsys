@@ -41,4 +41,13 @@ public class BorrowRecord {
     private Copy copy;
 
 
+    public String getName() {
+
+        return id+" "+customer.getFullName()+" copyID: "+copy.getId();
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
