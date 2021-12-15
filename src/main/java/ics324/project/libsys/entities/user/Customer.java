@@ -32,6 +32,7 @@ public class Customer extends User {
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        super.setEnabled(false);
         setRole("ROLE_USER");
     }
 

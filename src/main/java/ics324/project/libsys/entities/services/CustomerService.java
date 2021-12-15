@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 
 @RequiredArgsConstructor
@@ -30,6 +31,14 @@ public class CustomerService {
 
     public List<Customer> CustomersAvalibleForBorrow() {
         return customerRepository.availableForBorrow();
+    }
+
+    public void saveAll(Set<Customer> customer) {
+        customerRepository.saveAll(customer);
+    }
+
+    public void save(Customer customer) {
+        customerRepository.save(customer);
     }
     //public Customer findByuserName(String value) {
     //  }

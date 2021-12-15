@@ -2,6 +2,7 @@ package ics324.project.libsys.UI;
 
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -16,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
+import java.util.Set;
 
 @RolesAllowed("ROLE_ADMIN") //only admin can enter
 
@@ -25,6 +28,8 @@ import javax.annotation.security.RolesAllowed;
 public class CustomerView extends VerticalLayout {
     Grid<Customer> grid = new Grid<>(Customer.class);
     TextField filterText = new TextField();
+    Checkbox enable = new Checkbox("Enabled");
+
     CustomerService service;
 
 
@@ -34,12 +39,12 @@ public class CustomerView extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        Notification notification = Notification.show(username());
         add(getToolbar(), getContnet());
         updateList();
     }
 
     private void updateList() {
+
         grid.setItems(service.findAllCustomer());
     }
 
@@ -55,9 +60,10 @@ public class CustomerView extends VerticalLayout {
     }
 
     private void configureGrid() {
+        grid.addSelectionListener(selectionEvent -> grid.getSelectedItems().forEach(customer -> enable.setValue(customer.getEnabled())));
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("firstName", "lastName","email","userName");
+        grid.setColumns("firstName", "lastName", "enabled", "email", "userName");
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
@@ -69,23 +75,23 @@ public class CustomerView extends VerticalLayout {
         filterText.setPlaceholder("Filter by name...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        enable.addValueChangeListener(checkboxBooleanComponentValueChangeEvent -> custEnb());
 
-
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, enable);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
 
-
-    private String username() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getAuthorities().toString();
-        } else {
-            return principal.toString();
+    private void custEnb() {
+        if (!grid.getSelectedItems().isEmpty()) {
+            Customer customer = grid.getSelectedItems().iterator().next();
+            if (customer.getEnabled() != enable.getValue()) {
+                customer.setEnabled(enable.getValue());
+                service.save(customer);
+                updateList();
+            }
         }
-
-
     }
+
+
 }

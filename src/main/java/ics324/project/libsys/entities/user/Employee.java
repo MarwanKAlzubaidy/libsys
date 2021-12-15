@@ -27,6 +27,7 @@ public class Employee extends User {
     public Employee(String fname, String lname) {
         this.firstName = fname;
         this.lastName = lname;
+        super.setEnabled(true);
         setRole("ROLE_ADMIN");
     }
 

@@ -73,7 +73,7 @@
         <dependency>
             <groupId>org.webjars.bowergithub.vaadin</groupId>
             <artifactId>vaadin-combo-box</artifactId>
-            <version>[4.2.7)</version>
+            <version>[4.2.7]</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
