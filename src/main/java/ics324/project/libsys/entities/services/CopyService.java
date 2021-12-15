@@ -3,6 +3,7 @@ package ics324.project.libsys.entities.services;
 
 import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.copy.Copy;
+import ics324.project.libsys.entities.copy.LoanedCopy;
 import ics324.project.libsys.entities.copy.OwnedCopy;
 import ics324.project.libsys.enums.Availability;
 import ics324.project.libsys.repo.CopyRepository;
@@ -27,6 +28,14 @@ public class CopyService {
 
     public List<Copy> getAllbyBook(Book book,Availability availability) {
         return  copyRepository.findByBookAndAvailability( book, availability);
+
+    }
+    public List<OwnedCopy> getAllOwend(){
+        return  ownedCopyRepository.findAll();
+
+    }
+    public List<LoanedCopy> getAllLoaned(){
+        return  loanedCopyRepository.findAll();
 
     }
 }

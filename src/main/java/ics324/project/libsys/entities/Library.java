@@ -26,5 +26,8 @@ public class Library {
     private Set<LoanedCopy> copies ;
 
 
-
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
