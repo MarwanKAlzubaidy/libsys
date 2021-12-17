@@ -40,6 +40,10 @@ public class CustomerService {
     public void save(Customer customer) {
         customerRepository.save(customer);
     }
+
+    public Customer findByUsername(String username) {
+       return customerRepository.findByuserName(username);
+    }
     //public Customer findByuserName(String value) {
     //  }
 }

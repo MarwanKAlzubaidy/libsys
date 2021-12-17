@@ -9,8 +9,10 @@ import ics324.project.libsys.repo.BorrowRecordRepository;
 import ics324.project.libsys.repo.CopyRepository;
 import ics324.project.libsys.repo.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -56,5 +58,21 @@ public class BorrowRecordService {
         copyRepository.save(copy);
         borrowRecord.setStatus(Status.RETURNED);
         borrowRecordRepository.save(borrowRecord);
+    }
+
+    public List<BorrowRecord> getALlrecordsByCustomer(Customer customer) {
+        return  borrowRecordRepository.findByCustomer(customer);
+    }
+
+    //this methode will check at 11:30pm which book return date = today and status = not returned
+    //it will change the status to OverDue
+    @Scheduled(cron = "0 35 23 * * *")
+    public void updateOverDue()
+    {
+        List<BorrowRecord> records=borrowRecordRepository.findByReturnDateAndStatus(LocalDate.now(),Status.NOT_DUE);
+        records.forEach(borrowRecord -> borrowRecord.setStatus(Status.OVERDUE));
+            borrowRecordRepository.saveAll(records);
+
+
     }
 }

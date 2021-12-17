@@ -24,10 +24,10 @@ public class BorrowRecord {
 
     @Column(nullable = false)
     private LocalDate check_out_date;
-    @Future
+
     @NotNull
     @Column(nullable = false)
-    private LocalDate   return_date;
+    private LocalDate returnDate;
     private Status status;
 
 

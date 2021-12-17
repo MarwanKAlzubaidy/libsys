@@ -6,6 +6,7 @@ import ics324.project.libsys.entities.copy.Copy;
 import ics324.project.libsys.entities.copy.LoanedCopy;
 import ics324.project.libsys.entities.copy.OwnedCopy;
 import ics324.project.libsys.enums.Availability;
+import ics324.project.libsys.enums.returnStatus;
 import ics324.project.libsys.repo.CopyRepository;
 import ics324.project.libsys.repo.LoanedCopyRepository;
 import ics324.project.libsys.repo.OwnedCopyRepository;
@@ -27,8 +28,9 @@ public class CopyService {
     }
 
     public List<Copy> getAllbyBook(Book book,Availability availability) {
-        return  copyRepository.findByBookAndAvailability( book, availability);
-
+        List<Copy> copies= ownedCopyRepository.findByBookAndAvailability( book, availability);
+                copies.addAll(loanedCopyRepository.findByBookAndAvailabilityAndReturnToLibraryStatus(book,availability, returnStatus.NOT_RETURNED));
+                return copies;
     }
     public List<OwnedCopy> getAllOwend(){
         return  ownedCopyRepository.findAll();
@@ -37,5 +39,13 @@ public class CopyService {
     public List<LoanedCopy> getAllLoaned(){
         return  loanedCopyRepository.findAll();
 
+    }
+
+    public void saveOwend(OwnedCopy ownedCopy) {
+                 ownedCopyRepository.save(ownedCopy);
+    }
+
+    public void saveLoaned(LoanedCopy loanedCopy) {
+        loanedCopyRepository.save(loanedCopy);
     }
 }

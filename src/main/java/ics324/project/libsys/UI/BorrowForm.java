@@ -1,6 +1,5 @@
 package ics324.project.libsys.UI;
 
-import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -117,7 +116,7 @@ public class BorrowForm extends FormLayout {
         borrowRecord.setCopy(copyComboBox.getValue());
         borrowRecord.setCustomer(customerComboBox.getValue());
         borrowRecord.setCheck_out_date(LocalDate.now());
-        borrowRecord.setReturn_date(datePicker.getValue());
+        borrowRecord.setReturnDate(datePicker.getValue());
         try {
             borrowRecordService.save(borrowRecord);
         } catch (Exception e) {

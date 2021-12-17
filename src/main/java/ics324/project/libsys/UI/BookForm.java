@@ -3,6 +3,7 @@ package ics324.project.libsys.UI;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 
@@ -21,6 +22,7 @@ import ics324.project.libsys.entities.Author;
 import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.services.AuthorService;
 import ics324.project.libsys.entities.services.BookService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.vaadin.gatanaso.MultiselectComboBox;
 
 import javax.annotation.security.RolesAllowed;
@@ -33,7 +35,10 @@ public class BookForm extends FormLayout {
     Book book = new Book();
     AuthorService authorService;
     BookService bookService;
+
     // PublisherService;
+
+    ComboBox<Book> bookComboBox = new ComboBox<>("Book");
 
     TextField title = new TextField("Title");
     TextField ISBN = new TextField("ISBN");
@@ -44,6 +49,7 @@ public class BookForm extends FormLayout {
     MultiselectComboBox<Author> authors = new MultiselectComboBox<Author>("Authors");
     Button save = new Button("Save");
     Button back = new Button("Back");
+    Button delete = new Button("DELETE");
     Binder<Book> binder = new BeanValidationBinder<>(Book.class);
 
     public BookForm(AuthorService authorService, BookService bookService) {
@@ -54,8 +60,8 @@ public class BookForm extends FormLayout {
         configerButton();
         authors.setItems(authorService.findAllAuthor());
 
-        add(title, ISBN, edition, price, shelf_num, publishDate, authors);
-        HorizontalLayout hl = new HorizontalLayout(save, back);
+        add(title, ISBN, edition, price, shelf_num, publishDate, authors, bookComboBox);
+        HorizontalLayout hl = new HorizontalLayout(save, back, delete);
         add(hl);
 
 
@@ -65,10 +71,11 @@ public class BookForm extends FormLayout {
     private void validateAndSave() {
         try {
             binder.writeBean(book);
+            if(bookComboBox.getValue()!=null)
+                book.setId(bookComboBox.getValue().getId());
             bookService.saveBook(book);
             back();
         } catch (ValidationException e) {
-
 
 
         } catch (Exception e) {
@@ -81,10 +88,42 @@ public class BookForm extends FormLayout {
     }
 
     public void configerButton() {
+        bookComboBox.setItems(bookService.getAllbooks());
+        bookComboBox.addValueChangeListener(comboBoxBookComponentValueChangeEvent -> selectBook());
         save.addClickListener(buttonClickEvent -> validateAndSave());
         back.addClickListener(buttonClickEvent -> back());
 
+        delete.addClickListener(buttonClickEvent -> delete());
 
+
+    }
+
+    private void selectBook() {
+        if (bookComboBox.getValue() != null)
+
+            binder.readBean(bookComboBox.getValue());
+
+        else
+
+            binder.readBean(new Book());
+
+    }
+
+
+    private void delete() {
+        try{
+        if (bookComboBox.getValue() != null)
+        {
+            bookService.deleteBook(bookComboBox.getValue());
+
+        }
+        else{Notification notification=Notification.show("select a book to delete");
+        notification.setPosition(Notification.Position.MIDDLE);
+        }}
+        catch (DataIntegrityViolationException e)
+        {Notification notification=Notification.show("the selected book is refrenced by a copy you cannot delete that");
+            notification.setPosition(Notification.Position.MIDDLE);
+        }
     }
 
     private void back() {
