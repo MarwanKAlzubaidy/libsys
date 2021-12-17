@@ -1,6 +1,7 @@
 package ics324.project.libsys.entities.services;
 
 
+import ics324.project.libsys.Mail.EmailCfg;
 import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.user.Customer;
 import ics324.project.libsys.repo.BookRepository;
@@ -8,9 +9,12 @@ import ics324.project.libsys.repo.EmployeeRepository;
 import ics324.project.libsys.repo.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +26,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final BookRepository bookRepository;
     private final EmployeeRepository employeeRepository;
+    private final EmailCfg cfg;
 
     public void saveCustomer(Customer customer) throws Exception {
         if (employeeRepository.findByuserName(customer.getUserName()) == null)
@@ -52,19 +57,44 @@ public class CustomerService {
     //public Customer findByuserName(String value) {
     //  }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void checkForReservation() {
         List<Customer> customerHasReservation = customerRepository.customerHasReservation();
         Iterator<Customer> customerIterable = customerHasReservation.iterator();
         while (customerIterable.hasNext()) {
             Customer customer = customerIterable.next();
             List<Book> reserveBooks = bookRepository.findReserveBooks();
-            Set<Book> avaList = customer.getBooks();
-            Set<Book> notAvaList = customer.getBooks();
+            Set<Book> avaList = new HashSet<>(customer.getBooks());
+            Set<Book> notAvaList = new HashSet<>(customer.getBooks());
+            reserveBooks.forEach(book -> System.out.println(book));
             avaList.removeAll(reserveBooks);
+            avaList.forEach(book -> System.out.println(book));
+            System.out.println("Next list");
             notAvaList.retainAll(reserveBooks);
+            notAvaList.forEach(book -> System.out.println(book));
             customer.setBooks(notAvaList);
+            System.out.println(!avaList.isEmpty());
             if (!avaList.isEmpty()) {
+                customer.setBooks(notAvaList);
+                customerRepository.save(customer);
+
+                JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+                System.out.println(cfg.getHost());
+                mailSender.setHost(cfg.getHost());
+                mailSender.setPort(cfg.getPort());
+                mailSender.setUsername(cfg.getUsername());
+                mailSender.setPassword(cfg.getPassword());
+
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setSubject("Book Has been Avalible");
+                String s="";
+                Iterator<Book >iterator =avaList.iterator();
+              while (iterator.hasNext())
+              {s=s+" : "+iterator.next().toString();}
+                message.setText("Hello " + customer.getFullName() + "\n Book/books you reserved become avalible:" +s);
+                message.setFrom("libsys@lib.sys");
+                message.setTo(customer.getEmail());
+                mailSender.send(message);
 
 
             }
