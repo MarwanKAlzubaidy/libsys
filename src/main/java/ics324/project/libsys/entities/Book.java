@@ -2,6 +2,7 @@ package ics324.project.libsys.entities;
 
 
 import ics324.project.libsys.entities.copy.Copy;
+import ics324.project.libsys.entities.user.Customer;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
@@ -58,6 +59,12 @@ public class Book {
             joinColumns = @JoinColumn(name= "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name= "author_id", referencedColumnName = "id"))
     private Set<Author> authors = new java.util.LinkedHashSet<>();
+
+
+    //reserved by cusomters
+
+    @ManyToMany(mappedBy = "books")
+    private Set<Customer> customers = new java.util.LinkedHashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")

@@ -1,13 +1,14 @@
 package ics324.project.libsys.entities.user;
 
+import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.BorrowRecord;
 import ics324.project.libsys.entities.Fine;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -23,6 +24,14 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer")
     private Set<Fine> fines=new HashSet<>();
+
+
+    @JoinTable(name = "reserve",
+            joinColumns = @JoinColumn(name = "customers_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
+    @ManyToMany()
+
+    private Set<Book> books = new LinkedHashSet<>();
 
     public String getFullName(){
 

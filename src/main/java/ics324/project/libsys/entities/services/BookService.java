@@ -58,4 +58,7 @@ public class BookService {
     }
 
 
+    public List<Book> getBookNotAvalible() {
+        return bookRepository.findReserveBooks();
+    }
 }
