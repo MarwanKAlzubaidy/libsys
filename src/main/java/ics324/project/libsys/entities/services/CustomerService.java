@@ -78,7 +78,7 @@ public class CustomerService {
                 customer.setBooks(notAvaList);
                 customerRepository.save(customer);
 
-                JavaMailSenderImpl mailSender = new JavaMailSenderImpl(
+                JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
                 mailSender.setHost(cfg.getHost());
                 mailSender.setPort(cfg.getPort());
                 mailSender.setUsername(cfg.getUsername());

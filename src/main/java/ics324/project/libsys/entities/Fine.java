@@ -2,6 +2,7 @@ package ics324.project.libsys.entities;
 
 import ics324.project.libsys.entities.user.Customer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 
-
+@NoArgsConstructor
 public class Fine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +29,7 @@ public class Fine {
         this.customer=customer;
         this.amount=v;
         this.Reason=book_return_overDue;
+        this.status=fineStatus;
 
     }
 }
