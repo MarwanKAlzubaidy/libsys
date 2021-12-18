@@ -32,6 +32,7 @@ public class Employee extends User {
     }
 
     public Employee() {
+        super.setEnabled(true);
         setRole("ROLE_ADMIN");
     }
 }

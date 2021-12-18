@@ -49,7 +49,8 @@ public class Customer extends User {
 
 
 
-    public Customer() {
-        setRole("ROLE_USER");
+    public Customer(){
+    super.setEnabled(false);
+    setRole("ROLE_USER");
     }
 }
