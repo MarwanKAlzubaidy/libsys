@@ -63,7 +63,7 @@ public class CustomerView extends VerticalLayout {
         grid.addSelectionListener(selectionEvent -> grid.getSelectedItems().forEach(customer -> enable.setValue(customer.getEnabled())));
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("firstName", "lastName", "enabled", "email", "userName");
+        grid.setColumns("firstName", "lastName", "enabled", "email", "userName","totalPaid","totalNotPaid");
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 

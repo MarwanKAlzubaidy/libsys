@@ -3,11 +3,14 @@ package ics324.project.libsys.entities.user;
 import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.BorrowRecord;
 import ics324.project.libsys.entities.Fine;
+import ics324.project.libsys.entities.fine_status;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -24,14 +27,21 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer")
     private Set<Fine> fines=new HashSet<>();
+    @Transient
 
+    private int totalNotPaid;
+
+    @Transient
+
+    private int totalPaid;
 
     @JoinTable(name = "reserve",
             joinColumns = @JoinColumn(name = "customers_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
     @ManyToMany()
-
     private Set<Book> books = new LinkedHashSet<>();
+
+
 
     public String getFullName(){
 
@@ -45,9 +55,31 @@ public class Customer extends User {
         setRole("ROLE_USER");
     }
 
+    public int getTotalNotPaid() {
+        totalNotPaid=0;
+      Iterator<Fine> fineIterator=fines.stream().iterator();
+      while (fineIterator.hasNext())
+      {
+          Fine fine= fineIterator.next();
+          if(fine.getStatus()== fine_status.NOT_PAID)
+              totalNotPaid=totalNotPaid+fine.getAmount();
 
+      }
+       return  totalNotPaid;
+    }
 
+    public int getTotalPaid() {
+        totalPaid=0;
+        Iterator<Fine> fineIterator=fines.stream().iterator();
+        while (fineIterator.hasNext())
+        {
+            Fine fine= fineIterator.next();
+            if(fine.getStatus()== fine_status.PAID)
+                totalPaid=totalPaid+fine.getAmount();
 
+        }
+        return totalPaid;
+    }
 
     public Customer(){
     super.setEnabled(false);
