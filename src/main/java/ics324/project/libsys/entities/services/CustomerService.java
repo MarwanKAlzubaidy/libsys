@@ -66,27 +66,26 @@ public class CustomerService {
             List<Book> reserveBooks = bookRepository.findReserveBooks();
             Set<Book> avaList = new HashSet<>(customer.getBooks());
             Set<Book> notAvaList = new HashSet<>(customer.getBooks());
-            reserveBooks.forEach(book -> System.out.println(book));
+
             avaList.removeAll(reserveBooks);
-            avaList.forEach(book -> System.out.println(book));
-            System.out.println("Next list");
+
+
             notAvaList.retainAll(reserveBooks);
-            notAvaList.forEach(book -> System.out.println(book));
+
             customer.setBooks(notAvaList);
-            System.out.println(!avaList.isEmpty());
+
             if (!avaList.isEmpty()) {
                 customer.setBooks(notAvaList);
                 customerRepository.save(customer);
 
-                JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-                System.out.println(cfg.getHost());
+                JavaMailSenderImpl mailSender = new JavaMailSenderImpl(
                 mailSender.setHost(cfg.getHost());
                 mailSender.setPort(cfg.getPort());
                 mailSender.setUsername(cfg.getUsername());
                 mailSender.setPassword(cfg.getPassword());
 
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setSubject("Book Has been Avalible");
+                message.setSubject("Book Has been Available");
                 String s="";
                 Iterator<Book >iterator =avaList.iterator();
               while (iterator.hasNext())

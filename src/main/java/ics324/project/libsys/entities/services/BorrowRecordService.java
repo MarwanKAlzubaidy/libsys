@@ -1,18 +1,22 @@
 package ics324.project.libsys.entities.services;
 
 import ics324.project.libsys.entities.BorrowRecord;
+import ics324.project.libsys.entities.Fine;
 import ics324.project.libsys.entities.copy.Copy;
+import ics324.project.libsys.entities.fine_status;
 import ics324.project.libsys.entities.user.Customer;
 import ics324.project.libsys.enums.Availability;
 import ics324.project.libsys.enums.Status;
 import ics324.project.libsys.repo.BorrowRecordRepository;
 import ics324.project.libsys.repo.CopyRepository;
 import ics324.project.libsys.repo.CustomerRepository;
+import ics324.project.libsys.repo.FineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +26,7 @@ public class BorrowRecordService {
     final BorrowRecordRepository borrowRecordRepository;
     final CopyRepository copyRepository;
     final CustomerRepository customerRepository;
-
+    final FineRepository fineRepository;
 
     public List<BorrowRecord> getALlrecords() {
         return borrowRecordRepository.findAll();
@@ -66,11 +70,14 @@ public class BorrowRecordService {
 
     //this methode will check at 11:30pm which book return date = today and status = not returned
     //it will change the status to OverDue
-    @Scheduled(cron = "0 35 23 * * *")
+    @Scheduled(cron = "0 0 23 * * *")
     public void updateOverDue()
     {
         List<BorrowRecord> records=borrowRecordRepository.findByReturnDateAndStatus(LocalDate.now(),Status.NOT_DUE);
+        List<Fine> fines=new ArrayList<>();
         records.forEach(borrowRecord -> borrowRecord.setStatus(Status.OVERDUE));
+        records.forEach(borrowRecord -> fines.add(new Fine(borrowRecord.getCustomer(),100,"book return OverDue", fine_status.NOT_PAID)));
+            fineRepository.saveAll(fines);
             borrowRecordRepository.saveAll(records);
 
 

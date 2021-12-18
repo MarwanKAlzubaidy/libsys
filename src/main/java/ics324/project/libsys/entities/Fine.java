@@ -24,4 +24,10 @@ public class Fine {
     @ManyToOne(optional = false)
     private Customer customer;
 
+    public Fine(Customer customer, int v, String book_return_overDue,fine_status fineStatus) {
+        this.customer=customer;
+        this.amount=v;
+        this.Reason=book_return_overDue;
+
+    }
 }
