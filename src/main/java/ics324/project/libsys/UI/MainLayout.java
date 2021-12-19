@@ -69,23 +69,31 @@ public class MainLayout extends AppLayout {
         reserveLink.setVisible(false);
         RouterLink returnLink = new RouterLink("Returns ", ReturnView.class);//emp
         returnLink.setVisible(false);
-
+        RouterLink renewLink = new RouterLink("Renew", Renew.class);//cust
+        returnLink.setVisible(false);
+        RouterLink recordLink=new RouterLink("Records",BorrowView.class);
+        recordLink.setVisible(false);
+        RouterLink addRecLink= new RouterLink("add record",BorrowForm.class);
+        addRecLink.setVisible(false);
         authorLink.setVisible(false);
         Object prince = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (prince instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) prince;
-            if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
-            {   BookAdd.setVisible(true);
+            if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                BookAdd.setVisible(true);
                 BorrowLink.setVisible(true);
                 authorLink.setVisible(true);
                 CopyLink.setVisible(true);
                 CustomerLink.setVisible(true);
                 EmployeeLink.setVisible(true);
-                returnLink.setVisible(true);}
+                returnLink.setVisible(true);
+                recordLink.setVisible(true);
+                addRecLink.setVisible(true);
+            }
             else {
                 historyLink.setVisible(true);
                 reserveLink.setVisible(true);
-
+                renewLink.setVisible(true);
 
             }
         }
@@ -102,8 +110,11 @@ public class MainLayout extends AppLayout {
                 CopyLink,
                 CustomerLink,
                 EmployeeLink,
-                returnLink
-                ));
+                recordLink,
+                addRecLink,
+                returnLink,
+                renewLink
+        ));
     }
 
     private Component login_logout() {

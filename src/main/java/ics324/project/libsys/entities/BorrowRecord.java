@@ -1,10 +1,11 @@
-package ics324.project.libsys.entities;
 
+package ics324.project.libsys.entities;
+import lombok.Setter;
 import ics324.project.libsys.entities.copy.Copy;
 import ics324.project.libsys.entities.user.Customer;
 import ics324.project.libsys.enums.Status;
 import lombok.Getter;
-import lombok.Setter;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -29,7 +30,7 @@ public class BorrowRecord {
     @Column(nullable = false)
     private LocalDate returnDate;
     private Status status;
-
+    private boolean extended;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)

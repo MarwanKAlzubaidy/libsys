@@ -19,7 +19,7 @@ import java.util.List;
 
 
 //this is for adding owned copy
-@Route(value = "Copy/add",layout = MainLayout.class)
+@Route(value = "copy/add",layout = MainLayout.class)
 @RolesAllowed("ROLE_ADMIN")
 public class CopyAddView    extends FormLayout {
     OwnedCopy ownedCopy;

@@ -53,7 +53,7 @@ public class BorrowRecordService {
 
     public void saveMultiReturns(Set<BorrowRecord> recordSet) {
         recordSet.forEach(borrowRecord -> saveReturn(borrowRecord)
-                );
+        );
     }
 
     private void saveReturn(BorrowRecord borrowRecord) {
@@ -62,6 +62,10 @@ public class BorrowRecordService {
         copyRepository.save(copy);
         borrowRecord.setStatus(Status.RETURNED);
         borrowRecordRepository.save(borrowRecord);
+    }
+
+    public List<BorrowRecord> findByCustomerAndStatusAndExtended(Customer customer, Status status, boolean extended) {
+        return borrowRecordRepository.findByCustomerAndStatusAndExtended(customer,status,extended);
     }
 
     public List<BorrowRecord> getALlrecordsByCustomer(Customer customer) {
@@ -77,9 +81,13 @@ public class BorrowRecordService {
         List<Fine> fines=new ArrayList<>();
         records.forEach(borrowRecord -> borrowRecord.setStatus(Status.OVERDUE));
         records.forEach(borrowRecord -> fines.add(new Fine(borrowRecord.getCustomer(),100,"book return OverDue", fine_status.NOT_PAID)));
-            fineRepository.saveAll(fines);
-            borrowRecordRepository.saveAll(records);
+        fineRepository.saveAll(fines);
+        borrowRecordRepository.saveAll(records);
 
 
+    }
+
+    public void saveExtend(BorrowRecord borrowRecord) {
+        borrowRecordRepository.save(borrowRecord);
     }
 }

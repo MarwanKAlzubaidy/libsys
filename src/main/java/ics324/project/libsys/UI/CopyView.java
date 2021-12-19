@@ -1,5 +1,7 @@
 package ics324.project.libsys.UI;
 
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -16,6 +18,9 @@ import javax.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_ADMIN")
 @Route(value = "copy", layout = MainLayout.class)
 public class CopyView extends VerticalLayout {
+    Button addCopy=new Button("add Owned copy");
+
+
     Grid<OwnedCopy> ownedCopyGrid = new Grid<>(OwnedCopy.class);
     Grid<LoanedCopy> loanedCopyGrid = new Grid<>(LoanedCopy.class);
     ComboBox<Availability> availabilityComboBox1 = new ComboBox<>();
@@ -31,11 +36,14 @@ public class CopyView extends VerticalLayout {
         setComboboxes();
         gridConfig();
         getContent();
+
+        HorizontalLayout  hl=new HorizontalLayout(availabilityComboBox1,addCopy);
         HorizontalLayout horizontalLayout = new HorizontalLayout(availabilityComboBox2, return_statusComboBox);
-        add(availabilityComboBox1, ownedCopyGrid, horizontalLayout, loanedCopyGrid);
+        add(hl, ownedCopyGrid, horizontalLayout, loanedCopyGrid);
     }
 
     private void setComboboxes() {
+        addCopy.addClickListener(buttonClickEvent -> UI.getCurrent().navigate("copy/add"));
         availabilityComboBox1.setItems(Availability.values());
         availabilityComboBox2.setItems(Availability.values());
         return_statusComboBox.setItems(returnStatus.values());

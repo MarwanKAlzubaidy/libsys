@@ -16,4 +16,6 @@ public interface BorrowRecordRepository extends JpaRepository<BorrowRecord, Long
     List<BorrowRecord> findByCustomer(Customer customer);
 
     List<BorrowRecord> findByReturnDateAndStatus(LocalDate now, Status notDue);
+
+    List<BorrowRecord> findByCustomerAndStatusAndExtended(Customer customer, Status status, boolean extended);
 }
