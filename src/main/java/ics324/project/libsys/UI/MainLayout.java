@@ -70,7 +70,7 @@ public class MainLayout extends AppLayout {
         RouterLink returnLink = new RouterLink("Returns ", ReturnView.class);//emp
         returnLink.setVisible(false);
         RouterLink renewLink = new RouterLink("Renew", Renew.class);//cust
-        returnLink.setVisible(false);
+        renewLink.setVisible(false);
         RouterLink recordLink = new RouterLink("Records", BorrowView.class);
         recordLink.setVisible(false);
         RouterLink addRecLink = new RouterLink("add record", BorrowForm.class);

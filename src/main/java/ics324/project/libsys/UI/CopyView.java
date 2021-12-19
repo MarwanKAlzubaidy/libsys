@@ -18,7 +18,7 @@ import javax.annotation.security.RolesAllowed;
 @RolesAllowed("ROLE_ADMIN")
 @Route(value = "copy", layout = MainLayout.class)
 public class CopyView extends VerticalLayout {
-    Button addCopy=new Button("add Owned copy");
+    Button addCopy=new Button("add  copy");
 
 
     Grid<OwnedCopy> ownedCopyGrid = new Grid<>(OwnedCopy.class);

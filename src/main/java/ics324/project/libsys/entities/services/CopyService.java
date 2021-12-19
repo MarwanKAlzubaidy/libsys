@@ -48,4 +48,7 @@ public class CopyService {
     public void saveLoaned(LoanedCopy loanedCopy) {
         loanedCopyRepository.save(loanedCopy);
     }
+
+    public void saveLoanedList(List<LoanedCopy> loanedCopyList) {  loanedCopyRepository.saveAll(loanedCopyList);
+    }
 }

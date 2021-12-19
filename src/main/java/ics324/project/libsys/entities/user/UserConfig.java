@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserConfig {
     private Object Employee;
-
+/*
     @Bean
     CommandLineRunner commandLineRunner(EmployeeRepository repository) {
         return args -> {
@@ -22,8 +22,8 @@ public class UserConfig {
             admin.setEnabled(true);
 
             repository.save(admin);
-        };
+        };*/
 
 
     }
-}
+
