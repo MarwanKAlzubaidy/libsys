@@ -20,8 +20,10 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.Route;
 import ics324.project.libsys.entities.Author;
 import ics324.project.libsys.entities.Book;
+import ics324.project.libsys.entities.Publisher;
 import ics324.project.libsys.entities.services.AuthorService;
 import ics324.project.libsys.entities.services.BookService;
+import ics324.project.libsys.entities.services.PublisherService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.vaadin.gatanaso.MultiselectComboBox;
 
@@ -36,10 +38,10 @@ public class BookForm extends FormLayout {
     AuthorService authorService;
     BookService bookService;
 
-    // PublisherService;
+     PublisherService publisherService;
 
     ComboBox<Book> bookComboBox = new ComboBox<>("Book");
-
+    ComboBox<Publisher> publisher =new ComboBox<>("Publisher");
     TextField title = new TextField("Title");
     TextField ISBN = new TextField("ISBN");
     TextField edition = new TextField("Edition");
@@ -52,15 +54,17 @@ public class BookForm extends FormLayout {
     Button delete = new Button("DELETE");
     Binder<Book> binder = new BeanValidationBinder<>(Book.class);
 
-    public BookForm(AuthorService authorService, BookService bookService) {
+    public BookForm(AuthorService authorService, BookService bookService, PublisherService publisherService) {
         this.authorService = authorService;
         this.bookService = bookService;
+        this.publisherService=publisherService;
         authors.setRequired(true);
+        publisher.setItems(publisherService.getAllPublishers());
         binder.bindInstanceFields(this);
         configerButton();
         authors.setItems(authorService.findAllAuthor());
 
-        add(title, ISBN, edition, price, shelf_num, publishDate, authors, bookComboBox);
+        add(title, ISBN, edition, publisher, price, shelf_num, publishDate, authors, bookComboBox);
         HorizontalLayout hl = new HorizontalLayout(save, back, delete);
         add(hl);
 

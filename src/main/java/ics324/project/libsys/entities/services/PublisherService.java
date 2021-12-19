@@ -19,4 +19,8 @@ public class PublisherService {
     public void savePublisher(Publisher publisher) { publisherRepository.save(publisher); }
 
     public void deletePublisher(Publisher publisher) { publisherRepository.delete(publisher); }
+
+    public void save(Publisher publisher) {
+        publisherRepository.save(publisher);
+    }
 }

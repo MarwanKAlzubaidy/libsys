@@ -75,6 +75,8 @@ public class MainLayout extends AppLayout {
         recordLink.setVisible(false);
         RouterLink addRecLink = new RouterLink("add record", BorrowForm.class);
         addRecLink.setVisible(false);
+        RouterLink publisherLink = new RouterLink("Publisher", PublisherView.class);
+        publisherLink.setVisible(false);
 
 
         RouterLink LibraryLink = new RouterLink("Libraries list", LibraryView.class);//lib
@@ -96,8 +98,8 @@ public class MainLayout extends AppLayout {
                 addRecLink.setVisible(true);
                 returnLink.setVisible(true);
                 LibraryLink.setVisible(true);
-            }
-             else {
+                publisherLink.setVisible(true);
+            } else {
                 historyLink.setVisible(true);
                 reserveLink.setVisible(true);
                 renewLink.setVisible(true);
@@ -123,6 +125,7 @@ public class MainLayout extends AppLayout {
                 renewLink,
                 LibraryLink,
                 returnLink
+                , publisherLink
         ));
     }
 

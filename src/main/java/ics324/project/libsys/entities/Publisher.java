@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ public class Publisher {
 
     private String location;
 
+    @Digits(integer = 12, fraction = 0)
     private String phone;
 
     @OneToMany(mappedBy = "publisher")

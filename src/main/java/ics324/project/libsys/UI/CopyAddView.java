@@ -1,5 +1,6 @@
 package ics324.project.libsys.UI;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -50,7 +51,7 @@ public class CopyAddView extends FormLayout {
 
     private void config() {
         libraryComboBox.setItems(libraryService.getAllLibraries());
-
+        back.addClickListener(buttonClickEvent -> UI.getCurrent().navigate("copy"));
         add.addClickListener(buttonClickEvent -> AddOwnedCopy());
         book.setRequired(true);
         book.setItems(bookService.getAllbooks());
