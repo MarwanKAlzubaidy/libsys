@@ -15,7 +15,9 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import ics324.project.libsys.entities.services.EmployeeService;
 import ics324.project.libsys.entities.user.Employee;
 
-@AnonymousAllowed
+import javax.annotation.security.RolesAllowed;
+
+@RolesAllowed("ROLE_ADMIN")
 @Route(value = "employee/reg", layout = MainLayout.class)
 public class EmployeeForm extends FormLayout {
     Employee employee = new Employee();

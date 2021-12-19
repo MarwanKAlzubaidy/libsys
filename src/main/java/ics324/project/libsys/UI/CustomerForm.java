@@ -46,6 +46,7 @@ public class CustomerForm extends FormLayout {
             Notification notification=Notification.show("YOU ARE ALREADY SIGNED IN");
 
             notification.setPosition(Notification.Position.MIDDLE);
+            save.setEnabled(false);
 
             }
     }

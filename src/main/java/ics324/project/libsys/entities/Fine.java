@@ -1,6 +1,7 @@
 package ics324.project.libsys.entities;
 
 import ics324.project.libsys.entities.user.Customer;
+import ics324.project.libsys.enums.fine_status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

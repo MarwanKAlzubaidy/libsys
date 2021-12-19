@@ -3,10 +3,9 @@ package ics324.project.libsys.entities.user;
 import ics324.project.libsys.entities.Book;
 import ics324.project.libsys.entities.BorrowRecord;
 import ics324.project.libsys.entities.Fine;
-import ics324.project.libsys.entities.fine_status;
+import ics324.project.libsys.enums.fine_status;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.HashSet;

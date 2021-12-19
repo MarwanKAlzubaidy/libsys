@@ -7,12 +7,14 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ics324.project.libsys.entities.services.CustomerService;
 import ics324.project.libsys.entities.user.Customer;
+import org.hibernate.loader.collection.OneToManyJoinWalker;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,8 +29,9 @@ import java.util.Set;
 @PageTitle("Customers")
 public class CustomerView extends VerticalLayout {
     Grid<Customer> grid = new Grid<>(Customer.class);
-    TextField filterText = new TextField();
+
     Checkbox enable = new Checkbox("Enabled");
+    RadioButtonGroup<String> filterRadioGroup=new RadioButtonGroup<>();
 
     CustomerService service;
 
@@ -44,8 +47,14 @@ public class CustomerView extends VerticalLayout {
     }
 
     private void updateList() {
-
+        if(filterRadioGroup.getValue()==null||filterRadioGroup.getValue().equals("All"))
         grid.setItems(service.findAllCustomer());
+        else if(filterRadioGroup.getValue().equals("has more than three book and one more than 120 days"))
+            grid.setItems(service.getCust3onelate());
+            else if(filterRadioGroup.getValue().equals("Always on Time"))
+                grid.setItems(service.custNoFine());
+                else if(filterRadioGroup.getValue().equals("new Customers"))
+                    grid.setItems(service.getNewCustomer());
     }
 
     private Component getContnet() {
@@ -72,12 +81,15 @@ public class CustomerView extends VerticalLayout {
 
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by name...");
-        filterText.setClearButtonVisible(true);
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        filterRadioGroup.setLabel("choose filter");
+        filterRadioGroup.setItems("All","has more than three book and one more than 120 days","Always on Time","new Customers");
+        filterRadioGroup.addValueChangeListener(radioButtonGroupStringComponentValueChangeEvent -> updateList());
+
+
+
         enable.addValueChangeListener(checkboxBooleanComponentValueChangeEvent -> custEnb());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, enable);
+        HorizontalLayout toolbar = new HorizontalLayout(filterRadioGroup, enable);
         toolbar.addClassName("toolbar");
         return toolbar;
     }

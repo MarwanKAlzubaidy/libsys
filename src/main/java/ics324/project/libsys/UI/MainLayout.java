@@ -20,8 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AnonymousAllowed
 public class MainLayout extends AppLayout {
     private final SecurityService securityService;
+
     public MainLayout(SecurityService Service) {
-        securityService=Service;
+        securityService = Service;
         createHeader();
         createDrawer();
 
@@ -34,9 +35,9 @@ public class MainLayout extends AppLayout {
         Button logout = new Button("Log out", e -> securityService.logout());
 
         HorizontalLayout header = new HorizontalLayout(
-          new DrawerToggle(), 
-          logo
-                ,login_logout()
+                new DrawerToggle(),
+                logo
+                , login_logout()
         );
 
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
@@ -44,36 +45,74 @@ public class MainLayout extends AppLayout {
         header.setWidth("100%");
         header.addClassNames("py-0", "px-m");
 
-        addToNavbar(header); 
+        addToNavbar(header);
 
     }
 
     private void createDrawer() {
-        RouterLink authorLink = new RouterLink("Author list", AuthorView.class);
+        RouterLink authorLink = new RouterLink("Author list", AuthorView.class);    //only emp
+        RouterLink BookLink = new RouterLink("Book list", BookView.class);//all
+        RouterLink BookAdd= new RouterLink("Book add",BookForm.class);
+        BookAdd.setVisible(false);
+        RouterLink BorrowLink = new RouterLink("Borrow records", BorrowView.class); //emp
+        BorrowLink.setVisible(false);
+        RouterLink CopyLink = new RouterLink("Copies list", CopyView.class);//emp
+        CopyLink.setVisible(false);
+        RouterLink CustomerLink = new RouterLink("Customer list", CustomerView.class);//emp
+        CustomerLink.setVisible(false);
+        RouterLink EmployeeLink = new RouterLink("Employee list", EmployeeView.class);//emp
+        EmployeeLink.setVisible(false);
+        RouterLink historyLink = new RouterLink("History View", HistoryView.class);//cust
+        historyLink.setVisible(false);
+        RouterLink homeLink = new RouterLink("Home", MainViewC.class);//all
+        RouterLink reserveLink = new RouterLink("Reserve", reserveView.class);//cust
+        reserveLink.setVisible(false);
+        RouterLink returnLink = new RouterLink("Returns ", ReturnView.class);//emp
+        returnLink.setVisible(false);
+
         authorLink.setVisible(false);
-        Object prince=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if( prince instanceof UserDetails){
-            UserDetails userDetails=  (UserDetails)prince;
-            if(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+        Object prince = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (prince instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) prince;
+            if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+            {   BookAdd.setVisible(true);
+                BorrowLink.setVisible(true);
+                authorLink.setVisible(true);
+                CopyLink.setVisible(true);
+                CustomerLink.setVisible(true);
+                EmployeeLink.setVisible(true);
+                returnLink.setVisible(true);}
+            else {
+                historyLink.setVisible(true);
+                reserveLink.setVisible(true);
 
-               authorLink.setVisible(true);
 
-
-
-
+            }
         }
         authorLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout( 
-            authorLink
-        ));
+        addToDrawer(new VerticalLayout(
+
+                BookLink,
+                BookAdd,
+                homeLink,
+                historyLink,
+                reserveLink,
+                authorLink,
+                CopyLink,
+                CustomerLink,
+                EmployeeLink,
+                returnLink
+                ));
     }
-    private Component login_logout(){
-        if(securityService.getAuthenticatedUser() !=null){
-        Button logout = new Button("Log out", e -> securityService.logout());
-        return logout;}
+
+    private Component login_logout() {
+        if (securityService.getAuthenticatedUser() != null) {
+            Button logout = new Button("Log out", e -> securityService.logout());
+            return logout;
+        }
         Button login = new Button("log in");
-        login.addClickListener(e->login.getUI().ifPresent(ui-> ui.navigate("login")));
+        login.addClickListener(e -> login.getUI().ifPresent(ui -> ui.navigate("login")));
         return login;
     }
 }

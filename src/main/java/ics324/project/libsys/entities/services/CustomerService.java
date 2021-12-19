@@ -86,11 +86,12 @@ public class CustomerService {
 
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setSubject("Book Has been Available");
-                String s="";
-                Iterator<Book >iterator =avaList.iterator();
-              while (iterator.hasNext())
-              {s=s+" : "+iterator.next().toString();}
-                message.setText("Hello " + customer.getFullName() + "\n Book/books you reserved become avalible:" +s);
+                String s = "";
+                Iterator<Book> iterator = avaList.iterator();
+                while (iterator.hasNext()) {
+                    s = s + " : " + iterator.next().toString();
+                }
+                message.setText("Hello " + customer.getFullName() + "\n Book/books you reserved become avalible:" + s);
                 message.setFrom("libsys@lib.sys");
                 message.setTo(customer.getEmail());
                 mailSender.send(message);
@@ -102,6 +103,21 @@ public class CustomerService {
         }
 
 
+    }
+
+
+    public  List<Customer>  getNewCustomer(){
+
+        return customerRepository.findNewCustomer();
+    }
+    public List<Customer>  getCust3onelate(){
+        return  customerRepository.getCust3onelate();
+
+
+    }
+    public List<Customer> custNoFine(){
+
+        return  customerRepository.getNoFine();
     }
 
 

@@ -44,7 +44,7 @@ public class HistoryView extends VerticalLayout {
 
     private void configGrid() {
         grid.setSizeFull();
-        grid.setColumns("id", "check_out_date", "return_date", "status");
+        grid.setColumns("id", "check_out_date", "returnDate", "status");
 
         grid.addColumn((customer -> customer.getCustomer().getFullName())).setHeader("Customer");
         grid.addColumn(copy -> copy.getCopy().getBook()).setHeader("Book");

@@ -3,7 +3,7 @@ package ics324.project.libsys.entities.services;
 import ics324.project.libsys.entities.BorrowRecord;
 import ics324.project.libsys.entities.Fine;
 import ics324.project.libsys.entities.copy.Copy;
-import ics324.project.libsys.entities.fine_status;
+import ics324.project.libsys.enums.fine_status;
 import ics324.project.libsys.entities.user.Customer;
 import ics324.project.libsys.enums.Availability;
 import ics324.project.libsys.enums.Status;

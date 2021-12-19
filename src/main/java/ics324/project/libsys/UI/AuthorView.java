@@ -18,15 +18,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+import javax.annotation.security.RolesAllowed;
 import java.util.Arrays;
 
-//@RolesAllowed("ROLE_ADMIN") //only admin can enter
-@AnonymousAllowed
+@RolesAllowed("ROLE_ADMIN") //only admin can enter
+
 @Route(value = "Author",layout=MainLayout.class)
 @PageTitle("Authors")
 public class AuthorView extends VerticalLayout {
     Grid<Author> grid = new Grid<>(Author.class);
-    TextField filterText = new TextField();
+
     AuthorForm authorForm;
 
     AuthorService service;
@@ -102,14 +103,12 @@ public class AuthorView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by name...");
-        filterText.setClearButtonVisible(true);
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
+
 
         Button addAuthorButton = new Button("Add Author");
         addAuthorButton.addClickListener(click->addAuthor());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addAuthorButton);
+        HorizontalLayout toolbar = new HorizontalLayout( addAuthorButton);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
