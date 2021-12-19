@@ -70,6 +70,9 @@ public class MainLayout extends AppLayout {
         RouterLink returnLink = new RouterLink("Returns ", ReturnView.class);//emp
         returnLink.setVisible(false);
 
+        RouterLink LibraryLink = new RouterLink("Libraries list", LibraryView.class);//lib
+        LibraryLink.setVisible(false);
+
         authorLink.setVisible(false);
         Object prince = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (prince instanceof UserDetails) {
@@ -81,7 +84,9 @@ public class MainLayout extends AppLayout {
                 CopyLink.setVisible(true);
                 CustomerLink.setVisible(true);
                 EmployeeLink.setVisible(true);
-                returnLink.setVisible(true);}
+                returnLink.setVisible(true);
+                LibraryLink.setVisible(true);
+            }
             else {
                 historyLink.setVisible(true);
                 reserveLink.setVisible(true);
@@ -102,6 +107,7 @@ public class MainLayout extends AppLayout {
                 CopyLink,
                 CustomerLink,
                 EmployeeLink,
+                LibraryLink,
                 returnLink
                 ));
     }
