@@ -52,7 +52,7 @@ public class MainLayout extends AppLayout {
     private void createDrawer() {
         RouterLink authorLink = new RouterLink("Author list", AuthorView.class);    //only emp
         RouterLink BookLink = new RouterLink("Book list", BookView.class);//all
-        RouterLink BookAdd= new RouterLink("Book add",BookForm.class);
+        RouterLink BookAdd = new RouterLink("Book add", BookForm.class);
         BookAdd.setVisible(false);
         RouterLink BorrowLink = new RouterLink("Borrow records", BorrowView.class); //emp
         BorrowLink.setVisible(false);
@@ -71,10 +71,15 @@ public class MainLayout extends AppLayout {
         returnLink.setVisible(false);
         RouterLink renewLink = new RouterLink("Renew", Renew.class);//cust
         returnLink.setVisible(false);
-        RouterLink recordLink=new RouterLink("Records",BorrowView.class);
+        RouterLink recordLink = new RouterLink("Records", BorrowView.class);
         recordLink.setVisible(false);
-        RouterLink addRecLink= new RouterLink("add record",BorrowForm.class);
+        RouterLink addRecLink = new RouterLink("add record", BorrowForm.class);
         addRecLink.setVisible(false);
+
+
+        RouterLink LibraryLink = new RouterLink("Libraries list", LibraryView.class);//lib
+        LibraryLink.setVisible(false);
+
         authorLink.setVisible(false);
         Object prince = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (prince instanceof UserDetails) {
@@ -89,8 +94,10 @@ public class MainLayout extends AppLayout {
                 returnLink.setVisible(true);
                 recordLink.setVisible(true);
                 addRecLink.setVisible(true);
+                returnLink.setVisible(true);
+                LibraryLink.setVisible(true);
             }
-            else {
+             else {
                 historyLink.setVisible(true);
                 reserveLink.setVisible(true);
                 renewLink.setVisible(true);
@@ -110,10 +117,12 @@ public class MainLayout extends AppLayout {
                 CopyLink,
                 CustomerLink,
                 EmployeeLink,
+                returnLink,
                 recordLink,
                 addRecLink,
-                returnLink,
-                renewLink
+                renewLink,
+                LibraryLink,
+                returnLink
         ));
     }
 
