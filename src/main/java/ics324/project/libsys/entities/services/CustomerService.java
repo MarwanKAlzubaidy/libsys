@@ -57,7 +57,7 @@ public class CustomerService {
     //public Customer findByuserName(String value) {
     //  }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void checkForReservation() {
         List<Customer> customerHasReservation = customerRepository.customerHasReservation();
         Iterator<Customer> customerIterable = customerHasReservation.iterator();
