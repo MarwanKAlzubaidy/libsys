@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.6</version>
+        <version>2.6.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>edu.kfupm</groupId>
@@ -15,7 +15,7 @@
     <description>libsys</description>
     <properties>
         <java.version>11</java.version>
-        <vaadin.version>14.7.5</vaadin.version>
+        <vaadin.version>23.0.9</vaadin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>org.vaadin.gatanaso</groupId>
             <artifactId>multiselect-combo-box-flow</artifactId>
-            <version>3.0.2</version> <!-- use appropriate version -->
+            <version>4.0.0-rc2</version> <!-- use appropriate version -->
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -82,7 +82,7 @@
         <dependency>
             <groupId>org.webjars.bowergithub.vaadin</groupId>
             <artifactId>vaadin-combo-box</artifactId>
-            <version>[4.2.7]</version>
+            <version>5.4.12</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -94,7 +94,7 @@
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
-                <version>21.0.8</version>
+                <version>23.0.9</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
